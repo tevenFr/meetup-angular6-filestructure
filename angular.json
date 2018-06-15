@@ -120,6 +120,165 @@
           }
         }
       }
+    },
+    "mysharedlib": {
+      "root": "projects/mysharedlib",
+      "sourceRoot": "projects/mysharedlib/src",
+      "projectType": "library",
+      "prefix": "my",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/mysharedlib/tsconfig.lib.json",
+            "project": "projects/mysharedlib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/mysharedlib/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/mysharedlib/src/test.ts",
+            "tsConfig": "projects/mysharedlib/tsconfig.spec.json",
+            "karmaConfig": "projects/mysharedlib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/mysharedlib/tsconfig.lib.json",
+              "projects/mysharedlib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "mysecondapp": {
+      "root": "projects/mysecondapp/",
+      "sourceRoot": "projects/mysecondapp/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/mysecondapp",
+            "index": "projects/mysecondapp/src/index.html",
+            "main": "projects/mysecondapp/src/main.ts",
+            "polyfills": "projects/mysecondapp/src/polyfills.ts",
+            "tsConfig": "projects/mysecondapp/tsconfig.app.json",
+            "assets": [
+              "projects/mysecondapp/src/favicon.ico",
+              "projects/mysecondapp/src/assets"
+            ],
+            "styles": [
+              "projects/mysecondapp/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/mysecondapp/src/environments/environment.ts",
+                  "with": "projects/mysecondapp/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "mysecondapp:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "mysecondapp:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "mysecondapp:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/mysecondapp/src/test.ts",
+            "polyfills": "projects/mysecondapp/src/polyfills.ts",
+            "tsConfig": "projects/mysecondapp/tsconfig.spec.json",
+            "karmaConfig": "projects/mysecondapp/karma.conf.js",
+            "styles": [
+              "projects/mysecondapp/src/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/mysecondapp/src/favicon.ico",
+              "projects/mysecondapp/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/mysecondapp/tsconfig.app.json",
+              "projects/mysecondapp/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "mysecondapp-e2e": {
+      "root": "projects/mysecondapp-e2e/",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/mysecondapp-e2e/protractor.conf.js",
+            "devServerTarget": "mysecondapp:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "mysecondapp:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "projects/mysecondapp-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ng6-project"
